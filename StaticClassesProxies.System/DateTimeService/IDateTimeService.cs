@@ -16,7 +16,7 @@
         DateTime UtcNow { get; }
 
         /// <summary>
-        /// 
+        /// Gets the current date.
         /// </summary>
         DateTime Today { get; }
     }

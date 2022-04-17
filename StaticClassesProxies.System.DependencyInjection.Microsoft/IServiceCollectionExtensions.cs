@@ -11,11 +11,16 @@ namespace StaticClassesProxies.System.DependencyInjection.Microsoft
         /// </summary>
         public static IServiceCollection AddStaticClassesProxies(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddTransient<IDateTimeService, DateTimeService>();
-            serviceCollection.AddTransient<IDirectory, DirectoryImpl>();
-            serviceCollection.AddTransient<IFile, FileImpl>();
+            return serviceCollection
+                .AddTransient<IDateTimeService, DateTimeService>()
+                .AddSystemIOProxies();
+        }
 
-            return serviceCollection;
+        private static IServiceCollection AddSystemIOProxies(this IServiceCollection serviceCollection)
+        {
+            return serviceCollection
+                .AddTransient<IDirectory, DirectoryImpl>()
+                .AddTransient<IFile, FileImpl>();
         }
     }
 }
