@@ -37,7 +37,7 @@ pipelines:
             - export RELEASES_DIR="./releases"
             - dotnet build StaticClassesProxies.System/StaticClassesProxies.System.csproj --configuration Release
             # create nuget package
-            - dotnet pack --output ${RELEASES_DIR} --configuration Release
+            - dotnet pack StaticClassesProxies.System/StaticClassesProxies.System.csproj --output ${RELEASES_DIR} --configuration Release
             # publish package to roleplaygames.jfrog.io
             - dotnet nuget push ${RELEASES_DIR}/*.nupkg --api-key ${USERNAME}:${PASSWORD} --source https://roleplaygames.jfrog.io/artifactory/api/nuget/v3/common-nuget
           condition:
@@ -51,7 +51,7 @@ pipelines:
             - export RELEASES_DIR="./releases"
             - dotnet build StaticClassesProxies.System.DependencyInjection.Microsoft/StaticClassesProxies.System.DependencyInjection.Microsoft.csproj --configuration Release
             # create nuget package
-            - dotnet pack --output ${RELEASES_DIR} --configuration Release
+            - dotnet pack StaticClassesProxies.System.DependencyInjection.Microsoft/StaticClassesProxies.System.DependencyInjection.Microsoft.csproj --output ${RELEASES_DIR} --configuration Release
             # publish package to roleplaygames.jfrog.io
             - dotnet nuget push ${RELEASES_DIR}/*.nupkg --api-key ${USERNAME}:${PASSWORD} --source https://roleplaygames.jfrog.io/artifactory/api/nuget/v3/common-nuget
           condition:
