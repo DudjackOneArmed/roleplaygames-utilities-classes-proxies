@@ -5,7 +5,7 @@
     <Version>1.1.0-alpha-004</Version>
     <RootNamespace>System</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <RepositoryUrl>https://bitbucket.org/Ganoes/net-system-static-classes-proxies</RepositoryUrl>
+    <RepositoryUrl>https://bitbucket.org/Ganoes/net-static-classes-proxies</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
