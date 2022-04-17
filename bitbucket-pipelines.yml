@@ -1,0 +1,61 @@
+#  Template .NET Core build
+
+#  This template allows you to validate your .NET Core package.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: mcr.microsoft.com/dotnet/sdk:5.0
+
+pipelines:
+  default:
+      - step:
+          name: Build and test StaticClassesProxies.System library 
+          script:
+            - dotnet restore StaticClassesProxies.System/StaticClassesProxies.System.csproj
+            - dotnet build StaticClassesProxies.System/StaticClassesProxies.System.csproj --no-restore --configuration Release
+            - dotnet test StaticClassesProxies.System/StaticClassesProxies.System.csproj --no-build --configuration Release
+          condition:
+            changesets:
+              includePaths:
+                # any changes in deeply nested directories under StaticClassesProxies.System
+                - "StaticClassesProxies.System/**"
+      - step:
+          name: Build and test StaticClassesProxies.System.DependencyInjection.Microsoft library 
+          script:
+            - dotnet restore StaticClassesProxies.System.DependencyInjection.Microsoft/StaticClassesProxies.System.DependencyInjection.Microsoft.csproj
+            - dotnet build StaticClassesProxies.System.DependencyInjection.Microsoft/StaticClassesProxies.System.DependencyInjection.Microsoft.csproj --no-restore --configuration Release
+            - dotnet test StaticClassesProxies.System.DependencyInjection.Microsoft/StaticClassesProxies.System.DependencyInjection.Microsoft.csproj --no-build --configuration Release
+          condition:
+            changesets:
+              includePaths:
+                # any changes in deeply nested directories under StaticClassesProxies.System
+                - "StaticClassesProxies.System.DependencyInjection.Microsoft/**"
+  branches:
+    master:
+      - step:
+          name: Push to nuget repository StaticClassesProxies.System library
+          script:
+            - export RELEASES_DIR="./releases"
+            - dotnet build StaticClassesProxies.System/StaticClassesProxies.System.csproj --configuration Release
+            # create nuget package
+            - dotnet pack --output ${RELEASES_DIR} --configuration Release
+            # publish package to roleplaygames.jfrog.io
+            - dotnet nuget push ${RELEASES_DIR}/*.nupkg --api-key ${USERNAME}:${PASSWORD} --source https://roleplaygames.jfrog.io/artifactory/api/nuget/v3/common-nuget
+          condition:
+            changesets:
+              includePaths:
+                # any changes in deeply nested directories under StaticClassesProxies.System
+                - "StaticClassesProxies.System/**"
+      - step:
+          name: Push to nuget repository StaticClassesProxies.System.DependencyInjection.Microsoft library
+          script:
+            - export RELEASES_DIR="./releases"
+            - dotnet build StaticClassesProxies.System.DependencyInjection.Microsoft/StaticClassesProxies.System.DependencyInjection.Microsoft.csproj --configuration Release
+            # create nuget package
+            - dotnet pack --output ${RELEASES_DIR} --configuration Release
+            # publish package to roleplaygames.jfrog.io
+            - dotnet nuget push ${RELEASES_DIR}/*.nupkg --api-key ${USERNAME}:${PASSWORD} --source https://roleplaygames.jfrog.io/artifactory/api/nuget/v3/common-nuget
+          condition:
+            changesets:
+              includePaths:
+                # any changes in deeply nested directories under StaticClassesProxies.System
+                - "StaticClassesProxies.System.DependencyInjection.Microsoft/**"
