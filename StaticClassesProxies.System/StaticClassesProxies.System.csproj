@@ -1,11 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <Version>1.1.1-alpha</Version>
+    <TargetFramework>net6.0</TargetFramework>
+    <Version>6.0.0</Version>
     <RootNamespace>System</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/DudjackOneArmed/roleplaygames-utilities-classes-proxies</RepositoryUrl>
+	<Description>Contains interfaces for system classes that have not interfaces</Description>
+	<PackageReleaseNotes>
+		- .NET version bumped
+		- Proxy for System.Random added
+	</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
